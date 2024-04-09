@@ -91,8 +91,13 @@ static int bt_data_send(uint8_t num_events, uint16_t adv_int,
 	param.interval_min = BT_MESH_ADV_SCAN_UNIT(adv_int);
 	param.interval_max = param.interval_min;
 
-	err = bt_le_adv_start(&param, ad, ad_len, NULL, 0);
+	err = bt_mesh_scan_disable();
+	if (err) {
+		LOG_ERR("Scan-stop failed: err %d", err);
+		return err;
+	}
 
+	err = bt_le_adv_start(&param, ad, ad_len, NULL, 0);
 	if (err) {
 		LOG_ERR("Advertising failed: err %d", err);
 		return err;
@@ -111,6 +116,12 @@ static int bt_data_send(uint8_t num_events, uint16_t adv_int,
 	err = bt_le_adv_stop();
 	if (err) {
 		LOG_ERR("Stopping advertising failed: err %d", err);
+		return err;
+	}
+
+	err = bt_mesh_scan_enable();
+	if (err) {
+		LOG_ERR("Scan-start failed: err %d", err);
 		return err;
 	}
 

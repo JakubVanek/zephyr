@@ -11,8 +11,8 @@
 #define BT_MESH_ADV_DATA_SIZE 29
 
 #define BT_MESH_ADV_SCAN_UNIT(_ms) ((_ms) * 8 / 5)
-#define BT_MESH_SCAN_INTERVAL_MS 30
-#define BT_MESH_SCAN_WINDOW_MS   30
+#define BT_MESH_SCAN_INTERVAL_MS 1020
+#define BT_MESH_SCAN_WINDOW_MS   1000
 
 enum bt_mesh_adv_type {
 	BT_MESH_ADV_PROV,
